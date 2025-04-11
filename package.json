@@ -28,8 +28,8 @@
     {
       "name": "go-to-last-timestamp",
       "title": "Go to Last Timestamp",
-      "subtitle": "Launches Previous Rewind Timestamp ",
-      "description": "Launches Previous Rewind Timestamp ",
+      "subtitle": "Launches Previous Rewind Timestamp",
+      "description": "Launches Previous Rewind Timestamp",
       "mode": "no-view"
     }
   ],
