@@ -1,11 +1,12 @@
-import { open, showToast, ToastStyle } from "@raycast/api";
+import { open } from "@raycast/api";
+import { showFailureToast } from "@raycast/utils";
 import * as chrono from "chrono-node";
 
 export default async function Command(props: { arguments: { time: string } }) {
   const timeInput = props.arguments.time;
 
   if (!timeInput) {
-    await showToast(ToastStyle.Failure, "No time input provided");
+    await showFailureToast("No time input provided");
     return;
   }
 
@@ -14,7 +15,7 @@ export default async function Command(props: { arguments: { time: string } }) {
     const parsedDate = chrono.parseDate(timeInput);
 
     if (!parsedDate) {
-      await showToast(ToastStyle.Failure, "Could not parse the time input");
+      await showFailureToast("Could not parse the time input");
       return;
     }
 
@@ -23,13 +24,9 @@ export default async function Command(props: { arguments: { time: string } }) {
 
     // Create the Rewind AI deeplink
     const deeplink = `rewindai://show-moment?timestamp=${timestamp}`;
-
-    console.log(deeplink);
-
     // Open the deeplink
     await open(deeplink);
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    await showToast(ToastStyle.Failure, "Error processing time input", errorMessage);
+    await showFailureToast(error, { title: "Error processing time input" });
   }
 }
