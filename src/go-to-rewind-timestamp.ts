@@ -26,17 +26,37 @@ export default async function Command(props: { arguments: { time: string } }) {
       targetDate.setDate(targetDate.getDate() - daysAgo);
 
       if (timeStr) {
-        // Parse the time part using chrono
-        const parsedTime = chrono.parseDate(timeStr);
-        if (parsedTime) {
-          // Apply the time to the target date
-          targetDate.setHours(parsedTime.getHours());
-          targetDate.setMinutes(parsedTime.getMinutes());
-          targetDate.setSeconds(parsedTime.getSeconds());
-          targetDate.setMilliseconds(parsedTime.getMilliseconds());
+        // Check if timeStr is a 24h format without colon (e.g., "1405" or "205")
+        const digitPattern = /^(\d{3,4})$/;
+        const digitMatch = timeStr.match(digitPattern);
+
+        if (digitMatch) {
+          const digits = digitMatch[1].padStart(4, "0"); // Pad "205" to "0205"
+          const hours = parseInt(digits.slice(0, 2), 10);
+          const minutes = parseInt(digits.slice(2, 4), 10);
+
+          if (hours >= 0 && hours < 24 && minutes >= 0 && minutes < 60) {
+            targetDate.setHours(hours);
+            targetDate.setMinutes(minutes);
+            targetDate.setSeconds(0);
+            targetDate.setMilliseconds(0);
+          } else {
+            await showFailureToast("Invalid time format");
+            return;
+          }
         } else {
-          await showFailureToast("Could not parse the time portion");
-          return;
+          // Parse the time part using chrono
+          const parsedTime = chrono.parseDate(timeStr);
+          if (parsedTime) {
+            // Apply the time to the target date
+            targetDate.setHours(parsedTime.getHours());
+            targetDate.setMinutes(parsedTime.getMinutes());
+            targetDate.setSeconds(parsedTime.getSeconds());
+            targetDate.setMilliseconds(parsedTime.getMilliseconds());
+          } else {
+            await showFailureToast("Could not parse the time portion");
+            return;
+          }
         }
       } else {
         // No time specified, use the current time on that day
