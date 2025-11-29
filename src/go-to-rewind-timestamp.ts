@@ -14,12 +14,26 @@ export default async function Command(props: { arguments: { time: string } }) {
     let parsedDate: Date | null = null;
 
     // Check if the input matches the "y<number>" pattern (e.g., "y1", "y2", "y3")
-    const yPattern = /^y(\d+)(?:\s+(.+))?$/i;
-    const match = timeInput.match(yPattern);
+    // Can be at the start: "y1 2:05pm" or at the end: "2:05pm y1"
+    const yPatternStart = /^y(\d+)(?:\s+(.+))?$/i;
+    const yPatternEnd = /^(.+?)\s+y(\d+)$/i;
 
-    if (match) {
-      const daysAgo = parseInt(match[1], 10);
-      const timeStr = match[2]; // Optional time part (e.g., "2:05pm" or "14:05")
+    let matchStart = timeInput.match(yPatternStart);
+    let matchEnd = timeInput.match(yPatternEnd);
+
+    if (matchStart || matchEnd) {
+      let daysAgo: number;
+      let timeStr: string | undefined;
+
+      if (matchStart) {
+        // Pattern matched at start: "y1 2:05pm"
+        daysAgo = parseInt(matchStart[1], 10);
+        timeStr = matchStart[2]; // Optional time part (e.g., "2:05pm" or "14:05")
+      } else {
+        // Pattern matched at end: "2:05pm y1"
+        timeStr = matchEnd![1]; // Time part comes first
+        daysAgo = parseInt(matchEnd![2], 10);
+      }
 
       // Calculate the date X days ago
       const targetDate = new Date();
