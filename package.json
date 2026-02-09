@@ -1,19 +1,19 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "go-to-rewind-timestamp",
-  "title": "Go to Rewind Timestamp",
-  "description": "Open Rewind AI at a specific timestamp",
-  "icon": "rewind-ai.png",
-  "author": "haseab",
+  "name": "go-to-retrace-timestamp",
+  "title": "Go to Retrace Timestamp",
+  "description": "Open Retrace at a specific timestamp",
+  "icon": "retrace.png",
+  "author": "haseab_",
   "categories": [
     "Applications"
   ],
   "license": "MIT",
   "commands": [
     {
-      "name": "go-to-rewind-timestamp",
-      "title": "Go to Rewind Timestamp",
-      "subtitle": "Open Rewind AI at a specific timestamp",
+      "name": "go-to-retrace-timestamp",
+      "title": "Go to Retrace Timestamp",
+      "subtitle": "Open Retrace at a specific timestamp",
       "description": "Enter a time in natural language (e.g. '2nd day of march', '3 minutes ago', 'Feb 1 2am', 'yesterday 8am')",
       "mode": "no-view",
       "arguments": [
@@ -26,10 +26,10 @@
       ]
     },
     {
-      "name": "go-to-last-timestamp",
-      "title": "Go to Last Timestamp",
-      "subtitle": "Launches Previous Rewind Timestamp",
-      "description": "Launches Previous Rewind Timestamp",
+      "name": "go-to-last-retrace-timestamp",
+      "title": "Go to Last Retrace Timestamp",
+      "subtitle": "Launches Previous Retrace Timestamp",
+      "description": "Launches Previous Retrace Timestamp",
       "mode": "no-view"
     }
   ],
@@ -51,7 +51,7 @@
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
-    "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
+    "prepublishOnly": "echo \"Use npm run publish to publish to Raycast Store.\" && exit 1",
     "publish": "npx @raycast/api@latest publish"
   }
 }
